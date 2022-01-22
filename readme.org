@@ -1,0 +1,105 @@
+* About
+
+  This is my attempt to reduce clutter when viewing files written in org-mode. I
+  think it looks very noisy to look at all the markup, especially in readme
+  files when they are display in Dired buffers with my [[https://github.com/amno1/dired-auto-readme][dired-auto-readme]]
+  mode. When viewing other peoples org-files, I am usually mostly interested in
+  the content, not so in markup. Org-view-mode is an attempt to create a
+  read-only "viewer" mode so I can move in buffer in style of Dired buffers,
+  without using modifier kyes and not need to worry about accidentally writing
+  to it either.
+
+  This far, this is just a prototype. This lacks one or another user command, to
+  put it mildly. I do enable view-mode, so there are already quite few commands
+  that work, amongst them space for scrolling, < and > to go to the end and
+  beginning etc. See info node on view-mode in Emacs manual.
+
+  The idea was also to enable just parts of markup to be turned on/off. Thus
+  there are several minor modes. Each minor mode acts like a toggle to hide/show
+  a part of org-mode markup. I had ambition to create a toggle per each export
+  feature as well, for example texinfor only, html only, etc, but shear amount
+  of keywords and options is just too much for this to be practical. Currently
+  it is possible to separately control leading stars and tags in headings, and
+  property and property drawers. I am also not sure if I will leave this
+  separate features either, or I will just toggle on/off all at once. Those small
+  separate modes can also be used in normal org-mode, without veiewer mode on,
+  for example to just hide leading stars.
+
+  I would like to hear input, ideas, suggestions and problems found. I don't
+  promise to implement everything or any at all, but if something can be
+  implemented relatively easy and is useful I would like to hear the idea.
+
+* Installation  
+
+  Either clone this repo or just download 'org-view-mode.el'.
+
+  Put org-view-mode.el somewhere in Emacs load-path. From there you
+  can either:
+
+  M-x package-install-file RET org-view-mode.el RET
+
+  or just require file in your init file somewhere.
+
+* Requirements
+
+  Really none, should be compatible with Emacs 22.1 but package.el does not
+  recognize requirements older than Emacs 24.1.
+
+  I am not sure at which versions are some of org features introduced, so there
+  might be a bit of requirement, but in general, I really use nothing but Emacs
+  regex search facility and text properties, so this should really be compatible
+  even with files that does not use features addressed in this mode; regex search
+  will just not match and no action will be taken.
+
+* Usage
+
+  M-x org-view-mode to turn it on/off.
+
+  If you use export options for title and author, and have placed them
+  strategically in the file (on top), you can set 'org-view-center-credentials'
+  to 't if you wish to center the title and author, to resemble sort of a
+  title. It is a buffer-local variable.
+
+  If you find an author and title elsewhere in a file, it might look
+  disturbing with centered line of text in the middle of a file, so you can turn
+  off centering with:
+
+  M-x org-view-pretty-credentials-mode
+
+  It is possible to separately turn on/off leading stars in both viewer and
+  normal org-mode with:
+
+  M-x org-view-hide-stars-mode
+
+  as well as tags and properties with org-view-hide-tags-mode and
+  org-view-hide-properties-mode.
+
+  Since toggle commands are implemented as minor modes, there is also an option
+  to diminsh those small modes when org-view-mode is started:
+
+  (setq org-view-diminish-mode t)
+
+  This will not diminish org-view-mode itself, just those four small minor
+  toggle modes. To expurge org-view-mode from the modeline too, use something
+  like [[https://github.com/emacsmirror/diminish][diminish]] or [[https://elpa.gnu.org/packages/delight.html][delight]], or whatever you already use.
+  
+* Issues
+
+  Let me know.
+  
+* Screenshots
+
+  [[./screencast.gif]]
+
+* Special thanks
+
+  I am not very good user of org-mode myself, so I don't have any org-mode files
+  with complex markup of my own, so I have used some from others for both tests
+  and the screencast above. I will like to thank to authours for putting up their
+  code and Readme files and for leting us use them freely, in order of appereance
+  in the screencast above, to [[https://github.com/oantolin][Omar Antolín Camarena]] for [[https://github.com/oantolin/orderless][Orderless]], [[https://github.com/takaxp][Takaaki
+  Ishikawa]] for [[https://github.com/takaxp/moom][moom]], [[https://github.com/protesilaos/mct][Protesilaos Stavrou]] for [[https://github.com/protesilaos/mct][mct]] and [[https://github.com/okamsn][Okamsn]] for [[https://github.com/okamsn/loopy][loopy]]. Thank you.
+  
+* License
+
+  GPL v3. For details, see the atached [[./LICENSE][license file]].
