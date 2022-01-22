@@ -1,4 +1,4 @@
-;;; org-view-mode.el --- Hide org-babel source code markers  -*- lexical-binding: t; -*-
+;;; org-view-mode.el --- Hide markup in org mode files  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021  Arthur Miller
 
@@ -27,11 +27,11 @@
 ;;; Commentary:
 
 ;; A minor mode to help reduce clutter in org-mode files by
-;; hiding/unhiding leading stars for headings in org-mode.
+;; hiding/unhiding org-mode markup language
 ;;
-;; To hide all markers turn on org-hbm-mode by
+;; To turn it on execute:
 ;;
-;;          `M-x org-view-mode.'
+;;          `M-x org-view-mode'.
 ;;
 ;; To turn it off execute the same command.
 
@@ -59,7 +59,7 @@ Centering is done pixel wise relative to window width.")
   "Regex used to recognize leading stars in org-headings.")
 
 (defvar org-view-credentials-re "[ \t]*#\\+\\(TITLE\\|AUTHOR\\):"
-  "Regex used ot update AUTHOR and TITLE liens.")
+  "Regex used to update author and title lines.")
 
 (defun org-view--update-tags (visibility)
   "Update invisible property to VISIBILITY for tags in the current buffer."
@@ -146,7 +146,7 @@ Centering is done pixel wise relative to window width.")
 
 ;;;###autoload
 (define-minor-mode org-view-hide-stars-mode
-  "Hide/show babel source code blocks on demand."
+  "Hide/show leading stars in org-headings."
   :global nil :lighter " org-hsm"
   (unless (derived-mode-p 'org-mode)
     (error "Not in org-mode"))
@@ -154,7 +154,7 @@ Centering is done pixel wise relative to window width.")
 
 ;;;###autoload
 (define-minor-mode org-view-hide-properties-mode
-  "Hide/show babel source code blocks on demand."
+  "Hide/show properties and property drawers."
   :global nil :lighter " org-hpm"
   (unless (derived-mode-p 'org-mode)
     (error "Not in org-mode"))
