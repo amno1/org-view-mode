@@ -1,4 +1,4 @@
-;;; org-view-mode.el --- Hide markup in org mode files  -*- lexical-binding: t; -*-
+;;; org-view-mode.el --- Read-only viewer with less markup clutter in org mode files  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021  Arthur Miller
 
