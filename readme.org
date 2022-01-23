@@ -14,15 +14,27 @@
   [[./screencast.gif]]
   
 * Installation  
+** Straight
+You may use straight.el to install this package, or some combination of straight & use-package
+#+begin_src emacs-lisp
+;; straight.el
+(straight-use-package
+  '(org-view-mode :type git :host github :repo "amno1/org-view-mode"))
 
-  Either clone this repo or just download 'org-view-mode.el'.
+;; use-package & straight
+(use-package org-view-mode
+  :straight (org-view-mode :type git :host github :repo "amno1/org-view-mode"))
+#+end_src
 
-  Put org-view-mode.el somewhere in Emacs load-path. From there you
-  can either:
+** Manual
+Either clone this repo or just download 'org-view-mode.el'.
 
-  M-x package-install-file RET org-view-mode.el RET
+Put org-view-mode.el somewhere in Emacs load-path. From there you
+can either:
 
-  or just require file in your init file somewhere.
+M-x package-install-file RET org-view-mode.el RET
+
+or just require file in your init file somewhere.
 
 * Requirements
 
