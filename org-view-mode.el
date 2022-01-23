@@ -195,13 +195,13 @@ Centering is done pixel wise relative to window width.")
   (cond (org-view-mode
          (org-view-hide-tags-mode org-view-mode)
          (org-view-hide-stars-mode org-view-mode)
-         (org-view-hide-keywords-mode org-view-mode)
+;;         (org-view-hide-keywords-mode org-view-mode)
          (org-view-hide-properties-mode org-view-mode)
          (org-view-pretty-credentials-mode org-view-mode)
          (when org-view-diminish-mode
            (dolist (mode '(org-view-hide-tags-mode
                            org-view-hide-stars-mode
-                           org-view-hide-keywords-mode
+;;                           org-view-hide-keywords-mode
                            org-view-hide-properties-mode
                            org-view-pretty-credentials-mode))
              (let ((mode-str (cdr (assq mode minor-mode-alist))))
@@ -210,7 +210,7 @@ Centering is done pixel wise relative to window width.")
         (t (view-mode -1)
            (org-view-hide-tags-mode -1)
            (org-view-hide-stars-mode -1)
-           (org-view-hide-keywords-mode -1)
+;;           (org-view-hide-keywords-mode -1)
            (org-view-hide-properties-mode -1)
            (org-view-pretty-credentials-mode -1))))
 
