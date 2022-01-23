@@ -173,14 +173,18 @@ Centering is done pixel wise relative to window width.")
   (org-view-mode -1)
   (message "org-view mode disabled in current buffer"))
 
-(defvar-keymap org-view-mode-map
-  :doc "Keymap for ‘ORG-view-mode’"
-  "c" #'org-view-quit
-  "C" #'org-view-quit
-  "e" #'org-view-quit
-  "E" #'org-view-quit
-  "q" #'org-view-quit
-  "Q" #'org-view-quit)
+;; (defvar org-view-mode-map
+;;   :doc "Keymap for ‘ORG-view-mode’"
+;;   "c" #'org-view-quit
+;;   "C" #'org-view-quit
+;;   "e" #'org-view-quit
+;;   "E" #'org-view-quit
+;;   "q" #'org-view-quit
+;;  "Q" #'org-view-quit)
+(defvar org-view-mode-map (let ((map (make-sparse-keymap)))
+                            (define-key map (kbd "q") 'org-view-quit)
+                            map)
+  "The keymap for org-view-mode")
 
 ;;;###autoload
 (define-minor-mode org-view-mode
