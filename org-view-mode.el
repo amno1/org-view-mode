@@ -115,7 +115,7 @@ Centering is done pixel wise relative to window width.")
   (org-with-wide-buffer
    (save-excursion
      (with-silent-modifications
-       (goto-char (point-min))         
+       (goto-char (point-min))
        (while (re-search-forward org-view-credentials-re nil t)
          (put-text-property
           (match-beginning 0) (match-end 0) 'invisible visibility)
