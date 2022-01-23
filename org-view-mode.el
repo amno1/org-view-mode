@@ -98,7 +98,7 @@ Centering is done pixel wise relative to window width.")
        (goto-char (point-min))
        (while (re-search-forward "^[ \t]*#\\+PROPERTY:.*$" nil t)
          (put-text-property
-          (match-beginning 0) (match-end 0) 'invisible visibility))))))
+          (1- (match-beginning 0)) (1+ (match-end 0)) 'invisible visibility))))))
 
 (defun org-view--update-stars (visibility)
   "Update invisible property to VISIBILITY for markers in the current buffer."
@@ -151,6 +151,14 @@ Centering is done pixel wise relative to window width.")
   (unless (derived-mode-p 'org-mode)
     (error "Not in org-mode"))
   (org-view--update-stars org-view-hide-stars-mode))
+
+;;;###autoload
+(define-minor-mode org-view-hide-keywords-mode
+  "Hide/show leading stars in org-headings."
+  :global nil :lighter " org-hkm"
+  (unless (derived-mode-p 'org-mode)
+    (error "Not in org-mode"))
+  (org-view--update-keywords org-view-hide-stars-mode))
 
 ;;;###autoload
 (define-minor-mode org-view-hide-properties-mode
