@@ -18,7 +18,7 @@ that markup to pretty-render text in org file, by visually marking it as a
 quote, verse, or centering it on the screen. You can see the effect in the
 screenshot below:
 
-[[./paragraphs.png]]
+[[./images/paragraphs.png]]
 
 I haven't tested this feature very extensively, so please let me know if it does
 not work properly. For usage, see below.
@@ -33,7 +33,7 @@ older versions. I am not sure yet exactly which one is the oldest.
 
 * Screencast
 
-[[./screencast.gif]]
+[[./images/screencast.gif]]
   
 * Installation 
 ** Straight
@@ -117,7 +117,7 @@ The control values you can assign to each are: 'left, 'right and 'middle.
 Paragraphs marked with begin/end-center are always aligned in the middle.
 The effect of each alignment is shown in the screenshot below:
 
-[[./paragraphs-alignement.png]]
+[[./images/paragraphs-alignement.png]]
 
 In quote and verse paragraphs it is also possible to prettify the author if it
 is specified. The author should be prefixed with /---/ (three dashes) and
