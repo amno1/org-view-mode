@@ -1,29 +1,51 @@
 * About
 
-  This is my attempt to reduce clutter when viewing files written in org-mode. I
-  think it looks very noisy to look at all the markup, especially in readme
-  files when they are display in Dired buffers with my [[https://github.com/amno1/dired-auto-readme][dired-auto-readme]]
-  mode. When viewing other peoples org-files, I am usually mostly interested in
-  the content, not so in markup. Org-view-mode is an attempt to create a
-  read-only "viewer" mode so I can move in buffer in style of Dired buffers,
-  without using modifier kyes and not need to worry about accidentally writing
-  to it either.
-  
+This is my attempt to reduce clutter when viewing org-mode files. I think it
+looks noisy to look at all the markup, especially in README files when they are
+display in Dired buffers with my [[https://github.com/amno1/dired-auto-readme][dired-auto-readme]] mode. When viewing org-files,
+I am usually mostly interested in the content, not so in markup. Org-view-mode
+is an attempt to create a read-only "viewer" mode, so I can move in the buffer in
+style of Dired buffers, without using modifier keys and not need to worry about
+accidentally writing to it.
+
+* News
+
+** New feature: pretty paragraphs
+
+Org-view can now prettify paragraphs. According to [[https://orgmode.org/manual/Paragraphs.html][org-manual]], text can be marked
+as /quote/, /verse/ and /center/, for html export. I thought it would be nice to use
+that markup to pretty-render text in org file, by visually marking it as a
+quote, verse, or centering it on the screen. You can see the effect in the
+screenshot below:
+
+[[./paragraphs.png]]
+
+I haven't tested this feature very extensively, so please let me know if it does
+not work properly. For usage, see below.
+
+** Improved compatibility with older Emacses
+
+n the previous test, I used /string-pixel-width/ to calculate line lengths in pixels
+for the alignment,, this function is only available in the master and will
+be available in Emacs in version 29.1. Instead, I now have a custom function to
+calculate the pixel width for buffer lines, so org-view should be compatible with
+older versions. I am not sure yet exactly which one is the oldest.
+
 * Screencast
 
-  [[./screencast.gif]]
+[[./screencast.gif]]
   
-* Installation  
+* Installation 
 ** Straight
 You may use straight.el to install this package, or some combination of straight & use-package
 #+begin_src emacs-lisp
 ;; straight.el
 (straight-use-package
-  '(org-view-mode :type git :host github :repo "amno1/org-view-mode"))
+ '(org-view-mode :type git :host github :repo "amno1/org-view-mode"))
 
 ;; use-package & straight
 (use-package org-view-mode
-  :straight (org-view-mode :type git :host github :repo "amno1/org-view-mode"))
+             :straight (org-view-mode :type git :host github :repo "amno1/org-view-mode"))
 #+end_src
 
 ** Manual
@@ -34,83 +56,123 @@ can either:
 
 M-x package-install-file RET org-view-mode.el RET
 
-or just require file in your init file somewhere.
+or just require the file somewhere in your init file.
 
 * Requirements
 
-  Really none, should be compatible with Emacs 22.1 but package.el does not
-  recognize requirements older than Emacs 24.1.
-
-  I am not sure at which versions some of org features are introduced, so there
-  might be a bit of requirement, but in general, I really use nothing but Emacs
-  regex search facility and text properties, so this should really be compatible
-  even with files that does not use features addressed in this mode; regex search
-  will just not match and no action will be taken.
+Org-view does not use any external packages other than org-mode included with
+Emacs.
 
 * Usage
 
-  M-x org-view-mode to turn it on/off.
+** Org-view mode
 
-  If you use export options for title and author, and have placed them
-  strategically in the file (on top), you can set 'org-view-center-credentials'
-  to 't if you wish to center the title and author, to resemble sort of a
-  title. It is a buffer-local variable.
+M-x org-view-mode to turn it on/off.
 
-  If you find an author and title elsewhere in a file, it might look
-  disturbing with centered line of text in the middle of a file, so you can turn
-  off centering with:
+** Fill-column
 
-  M-x org-view-pretty-credentials-mode
+Some elements are centered in window in respect to fill-column value. Those are
+currently paragraphs marked with begin/end-centered, title, author, and email
+address. If fill-column is for some reason /nil/ or invalid (less than 1),
+org-view will use the default fill-column of 80 columns. Controlled with:
 
-  It is possible to separately turn on/off leading stars in both viewer and
-  normal org-mode with:
+/org-view-default-fill-column/
 
-  M-x org-view-hide-stars-mode
+variable. Its value can be customized in customize options.
 
-  as well as tags and properties with org-view-hide-tags-mode and
-  org-view-hide-properties-mode.
+** Pretty Credentials
 
-  Since toggle commands are implemented as minor modes, there is also an option
-  to diminsh those small modes when org-view-mode is started:
+If you find an author and title elsewhere in a file, it might look strange with
+a centered line of text in the middle of a file, so you can turn off the centering
+with:
 
-  (setq org-view-diminish-mode t)
+M-x org-view-pretty-credentials-mode
 
-  This will not diminish org-view-mode itself, just those four small minor
-  toggle modes. To expurge org-view-mode from the modeline too, use something
-  like [[https://github.com/emacsmirror/diminish][diminish]] or [[https://elpa.gnu.org/packages/delight.html][delight]], or whatever you already use.
+Centering is done with respect to fill-column value.
+
+Only /author/ is prettified as of currently. Co-authors are not yet prettified and
+are hidden by default, as org-view does with other markup.
+
+** Pretty Headings
+
+It is possible to separately turn on/off leading stars in the both viewer and
+normal org-mode with:
+  
+M-x org-view-hide-stars-mode
+
+as well as tags and properties with org-view-hide-tags-mode and
+org-view-hide-properties-mode.
+
+** Pretty Quotes and Verses
+
+Org-view will by default display text marked as /quote/ and /verse/ with their
+own face and aligned to the left. It is also possible to align them to the
+right and middle (vertical center). The alignment is done in respect to the
+longest line in the paragraph. Variables to control the alignment are:
+
+/org-view-quote-align/ and /org-view-verse-align/.
+
+The control values you can assign to each are: 'left, 'right and 'middle.
+
+Paragraphs marked with begin/end-center are always aligned in the middle.
+The effect of each alignment is shown in the screenshot below:
+
+[[./paragraphs-alignement.png]]
+
+In quote and verse paragraphs it is also possible to prettify the author if it
+is specified. The author should be prefixed with /---/ (three dashes) and
+stretches to the end of the buffer line. By default, dashes are replaced with Unicode
+drawing characters: ───. This option is controlled with /org-view-author-prefix/.
+
+Faces used to display quotes, verses and credentials are:
+
+/org-view-quote-face/, /org-view-verse-face/ and /org-view-author-face/
+
+which can all be customized via customize options.
+
+** Emacs mode-line
+
+Since toggle commands are implemented as minor modes, there is also an option
+to diminish those small modes when org-view-mode is started:
+
+(setq org-view-diminish-mode t)
+
+This will not diminish org-view-mode itself, just those four small minor
+toggle modes. To expunge org-view-mode from the modeline too, use something
+like [[https://github.com/emacsmirror/diminish][diminish]] or [[https://elpa.gnu.org/packages/delight.html][delight]], or whatever you already use.
   
 * Issues
 
-  This far, this is just a prototype. This lacks one or another user command, to
-  put it mildly. I do enable view-mode, so there are already quite few commands
-  that work, amongst them space for scrolling, < and > to go to the end and
-  beginning etc. See info node on view-mode in Emacs manual.
+Thus, this is just a prototype. This lacks one or another user command, to
+put it mildly. I do enable view-mode, so there are already a few commands
+that work, amongst them space for scrolling, < and > to go to the end and
+beginning etc. See info node on view-mode in Emacs manual.
 
-  The idea was also to enable just parts of markup to be turned on/off. Thus
-  there are several minor modes. Each minor mode acts like a toggle to hide/show
-  a part of org-mode markup. I had ambition to create a toggle per each export
-  feature as well, for example texinfor only, html only, etc, but shear amount
-  of keywords and options is just too much for this to be practical. Currently
-  it is possible to separately control leading stars and tags in headings, and
-  property and property drawers. I am also not sure if I will leave this
-  separate features either, or I will just toggle on/off all at once. Those small
-  separate modes can also be used in normal org-mode, without veiewer mode on,
-  for example to just hide leading stars.
+The idea was also to enable just parts of the markup to be turned on/off. Thus,
+there are several minor modes. Each minor mode acts like a toggle to hide/show
+a part of org-mode markup. I had an ambition to create a toggle for each export
+feature as well. For example texinfo only, html only, etc. But sheer amount
+of keywords and options is just too much for this to be practical. Currently
+it is possible to separately control leading stars and tags in headings, and
+property and property drawers. I am also not sure if I will leave these as
+separate features, either, or I will just toggle on/off all at once. Those small
+individual modes can also be used in normal org-mode, without the viewer mode
+on.
 
-  I would like to hear input, ideas, suggestions and problems found. I don't
-  promise to implement everything or any at all, but if something can be
-  implemented relatively easy and is useful I would like to hear the idea.
-  Let me know.
+I would like to hear input, ideas, suggestions and problems found. I don't
+promise to implement everything or any at all, but if something can be
+implemented relatively easily and is useful, I would like to hear the idea.
+Let me know.
 
 * Special thanks
 
-  I am not very good user of org-mode myself, so I don't have any org-mode files
-  with complex markup of my own, so I have used some from others for both tests
-  and the screencast above. I will like to thank to authours for putting up their
-  code and Readme files and for leting us use them freely, in order of appereance
-  in the screencast above, to [[https://github.com/oantolin][Omar Antolín Camarena]] for [[https://github.com/oantolin/orderless][Orderless]], [[https://github.com/takaxp][Takaaki
-  Ishikawa]] for [[https://github.com/takaxp/moom][moom]], [[https://github.com/protesilaos/mct][Protesilaos Stavrou]] for [[https://github.com/protesilaos/mct][mct]] and [[https://github.com/okamsn][Okamsn]] for [[https://github.com/okamsn/loopy][loopy]]. Thank you.
-  
+I am not a very good user of org-mode myself, so I don't have any org-mode files.
+with complex markup of my own, so I have used some from others for both tests
+and the screencast above. I would like to thank the authors for putting up their
+code and README files and for letting us use them freely, in order of the
+appearance in the screencast above, to [[https://github.com/oantolin][Omar Antolín Camarena]] for [[https://github.com/oantolin/orderless][Orderless]], [[https://github.com/takaxp][Takaaki
+Ishikawa]] for [[https://github.com/takaxp/moom][moom]], [[https://github.com/protesilaos/mct][Protesilaos Stavrou]] for [[https://github.com/protesilaos/mct][mct]] and [[https://github.com/okamsn][Okamsn]] for [[https://github.com/okamsn/loopy][loopy]]. Thank you.
+
 * License
 
-  GPL v3. For details, see the atached [[./LICENSE][license file]].
+GPL v3. For details, see the attached [[./LICENSE][license file]].
