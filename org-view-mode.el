@@ -70,6 +70,11 @@
   :type 'boolean
   :group 'org-view)
 
+(defcustom org-view-hide-ellipses nil
+  "Hide/show ellipses for hidden text."
+  :type 'boolean
+  :group 'org-view)
+
 (defcustom org-view-prettify-toc t
   "Prettify table of contents when included."
   :type 'boolean
@@ -206,11 +211,14 @@ Centering is done pixel wise relative to window width."
   "Properly enter `org-view-mode'."
   (add-hook 'change-major-mode-hook #'org-view--off nil t)
     (setq org-view--old-read-only buffer-read-only
-          org-view--old-ellipses
-          (display-table-slot standard-display-table 'selective-display)
           buffer-read-only t)
-    (set-display-table-slot standard-display-table
-                            'selective-display (string-to-vector ""))
+    (when org-view-hide-ellipses
+      (unless buffer-display-table
+        (setq buffer-display-table standard-display-table))
+      (setq org-view--old-ellipses
+            (display-table-slot buffer-display-table 'selective-display))
+      (set-display-table-slot buffer-display-table
+                              'selective-display (string-to-vector "")))
     (org-font-lock-ensure 1 (point-max))
     (org-view--toggle-features t))
 
@@ -218,9 +226,10 @@ Centering is done pixel wise relative to window width."
   "Properly exit `org-view-mode'."
   (remove-hook 'change-major-mode-hook #'org-view--off t)
   (setq buffer-read-only org-view--old-read-only)
-  (set-display-table-slot standard-display-table
-                          'selective-display
-                          org-view--old-ellipses)
+  (if org-view-hide-ellipses
+      (set-display-table-slot buffer-display-table
+                              'selective-display
+                              org-view--old-ellipses))
   (org-view--toggle-features))
 
 (defun org-view--update-toc (visibility)
