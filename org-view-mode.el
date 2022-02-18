@@ -181,7 +181,9 @@ Centering is done pixel wise relative to window width."
 (defvar-local org-view--old-content nil
   "Copy of buffer to restore it when quick edit is cancelled.")
 (defvar-local org-view--old-read-only nil
-  "Keep original state or read-only value and restore it after org-view-exit.")
+  "Keep the original state of read-only value and restore it after org-view-exit.")
+(defvar-local org-view--old-ellipses nil
+  "Keep the original state of `selective-display' value.")
 
 (defun org-view--toggle-features (&optional on)
   "Toggle each feature ON or off according to customize options."
@@ -203,15 +205,22 @@ Centering is done pixel wise relative to window width."
 (defun org-view--on ()
   "Properly enter `org-view-mode'."
   (add-hook 'change-major-mode-hook #'org-view--off nil t)
-  (setq org-view--old-read-only buffer-read-only
-        buffer-read-only t)
-  (org-font-lock-ensure 1 (point-max))
-  (org-view--toggle-features t))
+    (setq org-view--old-read-only buffer-read-only
+          org-view--old-ellipses
+          (display-table-slot standard-display-table 'selective-display)
+          buffer-read-only t)
+    (set-display-table-slot standard-display-table
+                            'selective-display (string-to-vector ""))
+    (org-font-lock-ensure 1 (point-max))
+    (org-view--toggle-features t))
 
 (defun org-view--off ()
   "Properly exit `org-view-mode'."
   (remove-hook 'change-major-mode-hook #'org-view--off t)
   (setq buffer-read-only org-view--old-read-only)
+  (set-display-table-slot standard-display-table
+                          'selective-display
+                          org-view--old-ellipses)
   (org-view--toggle-features))
 
 (defun org-view--update-toc (visibility)
@@ -274,11 +283,11 @@ Centering is done pixel wise relative to window width."
           (match-beginning 0) (match-end 0) 'invisible visibility))
        (goto-char (point-min))
        (while (re-search-forward "^[ \t]*#\\+PROPERTY:.*$" nil t)
-         (put-text-property
-            (if (> (match-beginning 0) 1)
-                (1- (match-beginning 0))
-              (match-beginning 0))
-            (1+ (match-end 0)) 'invisible visibility))))))
+         (let ((beg  (if (> (match-beginning 0) 1)
+                         (1- (match-beginning 0))
+                       (match-beginning 0)))
+               (end (1+ (match-end 0))))
+         (put-text-property beg end 'invisible visibility)))))))
 
 (defun org-view--update-stars (visibility)
   "Update invisible property to VISIBILITY for markers in the current buffer."
