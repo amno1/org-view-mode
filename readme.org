@@ -135,8 +135,8 @@ variable. Its value can be customized in customize options.
 ** Hiding markup
 
 Org-view-mode will by default hide any line starting with '#+' to the end of
-that line. Even new line '\n' character before the line is hidden, so that there
-are visible empty lines where hidden text is. You can set:
+that line. Also the new line character before that line is hidden, so that there
+are no visible empty lines where hidden text is. You can set:
 
 /org-view-hide-keywords/
 
