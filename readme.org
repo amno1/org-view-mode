@@ -12,6 +12,12 @@ to work well with org-capture, agendas, etc.
 
 * News
 
+<2022-02-18 fre>
+
+Org-view-mode can now hide som additional agenda keywords as well as hide
+ellipses. The last option comes with a caveat, so please be sure to read the
+usage part below.
+
 <2022-02-09 Wen>
 
 The mode is now completely refactored. Gone are small minor modes. I think it is
@@ -160,6 +166,19 @@ Only the /author/ and /email/ keywords are prettified as of currently along with
 /title/ keyword too. Co-authors are not yet prettified and are hidden by default,
 as org-view does with other markup. Patch is welcome if someone would like to
 implement that.
+
+** Hiding ellipses
+
+By default outline-mode display ellipses instead of hidden text. Org-view-mode
+can hide those too. Unfortunately it does not see possible to hide ellipses only
+at some places, since it depends on a value in display-table. At least I don't
+see how to change it, I have tried to bind selective-display-ellipses and
+org-ellipses in various ways in order to hide them, but it does not seem to do
+anything. Changing the value in buffer-display-table does the trick, but it is
+all or nothing approach. Since it also removes ellipses from headlines, there is
+no indication if the content is toggled or not. For that reason the default
+value is off. The variable in control is: //org-view-hide-ellipses/. Use it at your
+own risk..
 
 ** Pretty Headings
 
