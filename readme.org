@@ -20,10 +20,13 @@ don't expect this to work well with org-capture, agendas, etc.
 
 ** Melpa
 
-The package is now avaailable from Melpa repository, so if you have it in your
-package repository, you can install it either via package-install, or elget.
+The package is now avaailable from Melpa repository, so if you have Melpa
+included in your package archives, you can install org-view-mode either via
+built-in Emacs package manager with
 
-If you are using use-package you can just do:
+M-x package-install RET org-view-mode RET
+
+Or if you use use-package you can just do:
 
 #+begin_src emacs-lisp
 ;; straight.el
