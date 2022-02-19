@@ -1,84 +1,35 @@
-* About
+#+TITLE: org-view-mode
+
+https://melpa.org/packages/org-view-mode-badge.svg
 
 This is my attempt to reduce clutter when viewing org-mode files. I think it
 looks noisy to look at all the markup, especially in README files when they are
-display in Dired buffers with my [[https://github.com/amno1/dired-auto-readme][dired-auto-readme]] mode. When viewing org-files,
-I am usually mostly interested in the content, not so in markup. Org-view-mode
-is an attempt to create a read-only "viewer" mode. Thus per definition, this
-minor mode is for consuming org content, not so much for creating it. It could
-be actually renamed org-readme-mode, since I have created it mostly to read
-README files in git repos without unnecessary noise :-). Also, don't expect this
-to work well with org-capture, agendas, etc.
-
-* News
-
-<2022-02-18 fre>
-
-Org-view-mode can now hide som additional agenda keywords as well as hide
-ellipses. The last option comes with a caveat, so please be sure to read the
-usage part below.
-
-<2022-02-09 Wen>
-
-The mode is now completely refactored. Gone are small minor modes. I think it is
-a bit confusing synnergi with main org-view-mode. Instead there are few
-"features", named either as "prettify-" or "hide-" something, through which the
-user can control what will be processed by org-view-mode. All those are exposed
-as variables customizable via built-in "customize" options (or via init file if so
-choosen). By default everything is on, so all options are opt-out.
-
-** New feature: quick edit mode
-
-I thought it would be nice to remove the read only status on the buffer, in case
-I would like to do some simple edit, like fix a typo, or replace a word in the
-text. It is now possible to put buffer in edit mode, by calling
-/org-view-edit-on/, by default bound to 'e'. Once changes are saved, it will auto
-switch back to read-only mode.
-
-Changes can be aborted with /org-view-cancel-edit/ which is by default bound to
-C-x C-q.
-
-It is really meant just for quick and small fixes. To edit the org structure,
-like add new headings and other markup, just disable org-view with 'q' and
-re-enable it again when done.
-
-** New  feature: pretty toc
-
-If table of contents is present in the file, org-view-mode will hide enclosing
-colons around the keyword as well as the end markup:
-
-[[./images/toc.png]]
-
-
-<2022-02-07 Mon>
-
-** New feature: pretty paragraphs
-
-Org-view can now prettify paragraphs. According to [[https://orgmode.org/manual/Paragraphs.html][org-manual]], text can be marked
-as /quote/, /verse/ and /center/, for html export. I thought it would be nice to use
-that markup to pretty-render text in org file, by visually marking it as a
-quote, verse, or centering it on the screen. You can see the effect in the
-screenshot below:
-
-[[./images/paragraphs.png]]
-
-I haven't tested this feature very extensively, so please let me know if it does
-not work properly. For usage, see below.
-
-** Improved compatibility with older Emacses
-
-In the previous test, I used /string-pixel-width/ to calculate line lengths in
-pixels for the alignment. This function is only available in the master and
-will be available in Emacs in version 29.1. Instead, I now have a custom
-function to calculate the pixel width for buffer lines, so org-view should be
-compatible with older versions. I am not sure yet exactly which one is the
-oldest supported, but I think it is 25.1 due to use of /font-lock-ensure/.
+displayed in Dired buffers with my [[https://github.com/amno1/dired-auto-readme][dired-auto-readme]] mode. When viewing
+org-files, I am usually mostly interested in the content, not so in
+markup. Org-view-mode is an attempt to create a read-only "viewer" mode. Thus
+per definition, this minor mode is for consuming org content, not so much for
+creating it. It could be actually renamed org-readme-mode, since I have created
+it mostly to read README files in git repos without unnecessary noise :-). Also,
+don't expect this to work well with org-capture, agendas, etc.
 
 * Screencast
 
 [[./images/screencast.gif]]
   
 * Installation
+
+** Melpa
+
+The package is now avaailable from Melpa repository, so if you have it in your
+package repository, you can install it either via package-install, or elget.
+
+If you are using use-package you can just do:
+
+#+begin_src emacs-lisp
+;; straight.el
+(use-package org-view-mode
+  :ensure t)
+#+end_src
 
 ** Package.el
 This is not yet in any repository, but you can download org-view-mode.el
