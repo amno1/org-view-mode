@@ -1,6 +1,6 @@
 #+TITLE: org-view-mode
 
-https://melpa.org/packages/org-view-mode-badge.svg
+[[https://melpa.org/packages/org-view-mode-badge.svg]]
 
 This is my attempt to reduce clutter when viewing org-mode files. I think it
 looks noisy to look at all the markup, especially in README files when they are
