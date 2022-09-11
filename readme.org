@@ -19,7 +19,7 @@ don't expect this to work well with org-capture, agendas, etc.
 * Installation
 
 ** Melpa
-The package is now avaailable from Melpa repository, so if you have Melpa
+The package is now available from Melpa repository, so if you have Melpa
 included in your package archives, you can install org-view-mode either via
 built-in Emacs package manager with
 
