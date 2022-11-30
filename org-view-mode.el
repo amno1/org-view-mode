@@ -221,7 +221,7 @@ Centering is done pixel wise relative to window width."
                             'selective-display (string-to-vector "")))
   (apply (cond ((functionp 'org-font-lock-ensure) 'org-font-lock-ensure)
                ((functionp 'font-lock-ensure) 'font-lock-ensure)
-               (t (lambda (_) (error "No font-lock-ensure function"))))
+               (t (lambda (&rest _) (error "No font-lock-ensure function"))))
          `(1 ,(point-max)))
   (org-view--toggle-features t))
 
