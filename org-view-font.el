@@ -25,7 +25,7 @@
 (require 'face-remap)
 (require 'cl-seq)
 
-(defgroup 'org-view-font nil
+(defgroup org-view-font nil
   "Special font customizations for `org-view-mode'."
   :group 'org-view)
 
