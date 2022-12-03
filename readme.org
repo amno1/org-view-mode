@@ -170,6 +170,28 @@ For other options avialable please see the org-view group in customize:
 
 M-x customize-group RET org-view
 
+** Org View Font
+
+Org view mode comes with an optional =org-view-font= feature.  This gives you the
+ability to use a variable pitch/alternate font for reading org documents.
+
+You may utilize it by customizing the following variables:
+
+- =org-view-font-enable= to enable/disable the =org-view-font= feature
+- =org-view-font-remaps= (alist) to add/remove explicit face settings for org-mode
+- =org-view-font-no-remap= (list) to protect specific faces from being remapped
+
+Use =M-x customize-group org-view-font= to view these customization options in one
+view.
+
+You may also customize the view font with elisp:
+
+#+begin_src elisp
+(require 'org-view-mode)
+(setq org-view-font-enable)
+(add-to-list 'org-view-font-remaps '(default . (:family "Noto Sans")))
+#+end_src
+
 * Issues
 
 There might be lots of issues I am not aware of, since I haven't extensively
