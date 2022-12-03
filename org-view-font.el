@@ -25,6 +25,10 @@
 (require 'face-remap)
 (require 'cl-seq)
 
+(defgroup 'org-view-font nil
+  "Special font customizations for `org-view-mode'."
+  :group 'org-view)
+
 ;;;###autoload
 (defcustom org-view-font-remaps
   '((default . (:family "Serif" :height 1.25))
