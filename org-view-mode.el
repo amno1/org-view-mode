@@ -219,10 +219,7 @@ Centering is done pixel wise relative to window width."
           (display-table-slot buffer-display-table 'selective-display))
     (set-display-table-slot buffer-display-table
                             'selective-display (string-to-vector "")))
-  (apply (cond ((functionp 'org-font-lock-ensure) 'org-font-lock-ensure)
-               ((functionp 'font-lock-ensure) 'font-lock-ensure)
-               (t (lambda (&rest _) (error "No font-lock-ensure function"))))
-         `(1 ,(point-max)))
+  (font-lock-ensure 1 (point-max))
   (org-view--toggle-features t))
 
 (defun org-view--off ()
