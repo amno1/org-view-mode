@@ -210,17 +210,17 @@ Centering is done pixel wise relative to window width."
 (defun org-view--on ()
   "Properly enter `org-view-mode'."
   (add-hook 'change-major-mode-hook #'org-view--off nil t)
-    (setq org-view--old-read-only buffer-read-only
-          buffer-read-only t)
-    (when org-view-hide-ellipses
-      (unless buffer-display-table
-        (setq buffer-display-table standard-display-table))
-      (setq org-view--old-ellipses
-            (display-table-slot buffer-display-table 'selective-display))
-      (set-display-table-slot buffer-display-table
-                              'selective-display (string-to-vector "")))
-    (org-font-lock-ensure 1 (point-max))
-    (org-view--toggle-features t))
+  (setq org-view--old-read-only buffer-read-only
+        buffer-read-only t)
+  (when org-view-hide-ellipses
+    (unless buffer-display-table
+      (setq buffer-display-table standard-display-table))
+    (setq org-view--old-ellipses
+          (display-table-slot buffer-display-table 'selective-display))
+    (set-display-table-slot buffer-display-table
+                            'selective-display (string-to-vector "")))
+  (font-lock-ensure 1 (point-max))
+  (org-view--toggle-features t))
 
 (defun org-view--off ()
   "Properly exit `org-view-mode'."
