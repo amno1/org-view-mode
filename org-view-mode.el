@@ -38,6 +38,7 @@
 
 ;;; Code:
 (require 'org)
+(require 'org-view-font)
 
 ;;; Options
 (defgroup org-view nil
@@ -205,7 +206,9 @@ Centering is done pixel wise relative to window width."
   (if org-view-prettify-paragraphs
       (org-view--update-paragraphs on))
   (if org-view-prettify-credentials
-      (org-view--update-credentials on)))
+      (org-view--update-credentials on))
+  (if org-view-font-enable
+      (org-view--update-view-font on)))
 
 (defun org-view--on ()
   "Properly enter `org-view-mode'."
@@ -327,6 +330,12 @@ Centering is done pixel wise relative to window width."
                 (match-beginning 0) (match-end 0) 'invisible visibility))
              (org-view--center-region left right width visibility)))
            (forward-line))))))
+
+(defun org-view--update-view-font (enable)
+  "Turn on specialized font settings if `ENABLE' is non-nil."
+  (if enable
+      (org-view-font-enable-font)
+    (org-view-font-disable-font)))
 
 (defun org-view--fill-column-pixel-width ()
   "Return width for `fill-column' in pixels.
