@@ -206,7 +206,7 @@ and only in org-view-mode, you can do something like this:
 #+end_src
 
 Org-bullets, replace stars in headings with unicode characters, so in order to
-see the bullets in org-mode, you have to tell org-view-mode not to hide starts,
+see the bullets in org-mode, you have to tell org-view-mode not to hide stars,
 by customizing the org-view-hide-stars to nil.
 
 Of course, you will have to apropriately load org-bullets somewhere in your init
