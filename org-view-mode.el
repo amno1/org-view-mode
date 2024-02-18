@@ -53,60 +53,49 @@
 
 (defcustom org-view-hide-stars t
   "Hide/show leading stars in org-headings."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-hide-keywords t
   "Hide/show org-markup keywords."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-hide-agenda-keywords t
   "Hide/show DEADLINE and SCHEDULED keywords."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-hide-properties t
   "Hide/show properties and property drawers."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-hide-ellipses nil
   "Hide/show ellipses for hidden text."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-prettify-toc t
   "Prettify table of contents when included."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-prettify-credentials t
   "Prettify TITLE, AUTHOR and EMAIL when specified."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-prettify-paragraphs t
   "Prettify quote, verse and centered paragraphs in org-buffers."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defcustom org-view-paragraph-indent "  "
   "Indentation string for paragraphs."
-  :type 'string
-  :group 'org-view)
+  :type 'string)
 
 (defcustom org-view-default-fill-column 80
   "Default size for `fill-column' in org-view mode.
 
 This value is used only if `fill-column' has invalid size, such as <= 0 or nil."
-  :type 'fixnum
-  :group 'org-view)
+  :type 'fixnum)
 
 (defcustom org-view-author-prefix "───"
   "String used to pretty-render author prefix in paragraphs."
-  :type 'string
-  :group 'org-view)
+  :type 'string)
 
 (defcustom org-view-verse-align 'left
   "Specify how verses will be aligned.
@@ -114,23 +103,20 @@ This value is used only if `fill-column' has invalid size, such as <= 0 or nil."
 Alignement can be: left, right, middle or nil.  Nil value means to remove the
 alignement.  The alignement is done relative to the longest line in the
 paragrach.  If present, the author line is excluded."
-  :type 'symbol
-  :group 'org-view)
+  :type 'symbol)
 
 (defcustom org-view-quote-align 'left
   "Specify how quotes will be aligned.
 
 This variable has same meaning for quotes as the alignement in
 `org-view-verse-align'."
-  :type 'symbol
-  :group 'org-view)
+  :type 'symbol)
 
 (defcustom org-view-center-credentials t
   "Whether to align title and author in center or not.
 
 Centering is done pixel wise relative to window width."
-  :type 'boolean
-  :group 'org-view)
+  :type 'boolean)
 
 (defgroup org-view-faces nil
   "Faces for org-view mode."
