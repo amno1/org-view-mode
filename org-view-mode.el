@@ -176,6 +176,8 @@ Centering is done pixel wise relative to window width."
   "Keep the original state of read-only value and restore it after org-view-exit.")
 (defvar-local org-view--old-ellipses nil
   "Keep the original state of `selective-display' value.")
+(defvar-local org-view--old-link-display nil
+  "Keep the original state of `org-link-display'.")
 
 (defun org-view--toggle-features (&optional on)
   "Toggle each feature ON or off according to customize options."
@@ -202,12 +204,15 @@ Centering is done pixel wise relative to window width."
   (setq org-view--old-read-only buffer-read-only
         buffer-read-only t)
   (when org-view-hide-ellipses
-    (unless buffer-display-table
+    (unless buffer-displayd-table
       (setq buffer-display-table standard-display-table))
     (setq org-view--old-ellipses
           (display-table-slot buffer-display-table 'selective-display))
     (set-display-table-slot buffer-display-table
                             'selective-display (string-to-vector "")))
+  (setq org-view--old-link-display org-link-descriptive)
+  (unless org-link-descriptive
+    (org-toggle-link-display))
   (font-lock-ensure 1 (point-max))
   (org-view--toggle-features t))
 
@@ -215,6 +220,8 @@ Centering is done pixel wise relative to window width."
   "Properly exit `org-view-mode'."
   (remove-hook 'change-major-mode-hook #'org-view--off t)
   (setq buffer-read-only org-view--old-read-only)
+  (unless (eq org-link-descriptive org-view--old-link-display)
+    (org-toggle-link-display))
   (if org-view-hide-ellipses
       (set-display-table-slot buffer-display-table
                               'selective-display
