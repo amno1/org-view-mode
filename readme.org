@@ -192,6 +192,26 @@ You may also customize the view font with elisp:
 (add-to-list 'org-view-font-remaps '(default . (:family "Noto Sans")))
 #+end_src
 
+** Add 3rd party mode
+
+For example, if you would like to enable an additional mode, say org-bullets,
+and only in org-view-mode, you can do something like this:
+
+#+begin_src emacs-lisp
+(add-hook 'org-view-mode-hook
+          (lambda ()
+            (if org-view-mode
+                (org-bullets-mode +1)
+              (org-bullets-mode -1))) nil t)
+#+end_src
+
+Org-bullets, replace stars in headings with unicode characters, so in order to
+see the bullets in org-mode, you have to tell org-view-mode not to hide starts,
+by customizing the org-view-hide-stars to nil.
+
+Of course, you will have to apropriately load org-bullets somewhere in your init
+file as well.
+
 * Issues
 
 There might be lots of issues I am not aware of, since I haven't extensively
