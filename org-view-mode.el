@@ -204,7 +204,7 @@ Centering is done pixel wise relative to window width."
   (setq org-view--old-read-only buffer-read-only
         buffer-read-only t)
   (when org-view-hide-ellipses
-    (unless buffer-displayd-table
+    (unless buffer-display-table
       (setq buffer-display-table standard-display-table))
     (setq org-view--old-ellipses
           (display-table-slot buffer-display-table 'selective-display))

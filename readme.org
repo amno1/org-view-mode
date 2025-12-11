@@ -188,7 +188,7 @@ You may also customize the view font with elisp:
 
 #+begin_src elisp
 (require 'org-view-mode)
-(setq org-view-font-enable)
+(setq org-view-font-enable t)
 (add-to-list 'org-view-font-remaps '(default . (:family "Noto Sans")))
 #+end_src
 
